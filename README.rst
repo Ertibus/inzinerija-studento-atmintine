@@ -16,7 +16,7 @@ Kuriamos sistemos pavadinimas yra „Studento atmintinė“. Jos paskirtis yra s
 
 Dependencies
 ------------
-Python::
+Python dependencies. Can be installed with ``pip install -r requirements.txt``::
 
  PyQt5==5.15.5
  PyQt5-Qt5==5.15.2
