@@ -10,6 +10,13 @@ Projekto aprašymas
 
 Projekto metu sukurti pilnai funkcionuojančią programą bei parašyti projekto dokumentaciją.
 
+Sistemos vizija
+---------------------------------
+Kuriamos sistemos pavadinimas yra „Studento atmintinė“. Jos paskirtis yra suteikti galimybę studentui užfiksuoti būsimus atsiskaitymus, įvykius, bei jiems priskirti atitinkamas datas, pagal kurias sistema informuos naudotojus apie įvykius naudojant pranešimus. Naudotojai taip pat galės kurti planus, žymėti norimos atlikti užduoties žingsnius. Tai lyg išmanioji užrašinė, pagalbininkas padedantis planuoti naudotojo dienotvarkę, taip leisdama užtikrinti efektyvią darbo eigą.
+
 Dependencies
 ------------
-* Insert dependencies here
+Python:::
+ PyQt5==5.15.5
+ PyQt5-Qt5==5.15.2
+ PyQt5-sip==12.9.0
