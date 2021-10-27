@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
 class Message():
-    home = 0
-    settings = 1
+    login = 0
+    home = 1
+    settings = 2
+    clear = 99
