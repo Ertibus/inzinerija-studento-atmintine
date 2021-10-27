@@ -33,7 +33,6 @@ class Login():
     #6   | [         ] |
     #7   |             |
     #8   |  {SUBMIT}   |
-    #9   |   {BACK}    |
     #    +-------------+
     #10
     def press_register(self):
@@ -47,10 +46,6 @@ class Login():
             except Exception as err:
                 print(err)
                 QMessageBox.critical(None, "Error", str(err))
-            self.listener(Message.clear)
-            self.init_ui()
-
-        def _back():
             self.listener(Message.clear)
             self.init_ui()
 
@@ -85,10 +80,6 @@ class Login():
         submit_btn = QPushButton("Submit")
         submit_btn.clicked.connect(_submit)
         main_layout.addWidget(submit_btn, 8, 1)
-
-        back_btn = QPushButton("Back")
-        back_btn.clicked.connect(_back)
-        main_layout.addWidget(back_btn, 9, 1)
 
 
     #0   1              2

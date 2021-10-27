@@ -3,5 +3,6 @@
 class Message():
     login = 0
     home = 1
-    settings = 2
+    new_event = 2
+    settings = 3
     clear = 99

@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import *
 from program.ui import Message
 from datetime import datetime
 from PyQt5.QtCore import Qt
+import sys
 
 class Home():
     def __init__(self, body: QLayout, navigator):
@@ -10,22 +11,34 @@ class Home():
         self.init_ui()
 
     def init_ui(self):
+        def _new():
+            self.navigator(Message.new_event)
+
+        def _exit():
+            sys.exit(0)
+            print("Exit")
+
         wrapper = QGridLayout()
         wrapper.setColumnStretch(1, 1)
         self.body.addLayout(wrapper)
 
         button_layout = QVBoxLayout()
 
-        btn_other = QPushButton("other")
-        button_layout.addWidget(btn_other)
+        #
+        btn_new = QPushButton("New")
+        btn_new.clicked.connect(_new)
+        button_layout.addWidget(btn_new)
         button_layout.addStretch()
 
         btn_quit = QPushButton("Quit")
+        btn_quit.clicked.connect(_exit)
         button_layout.addWidget(btn_quit)
+        #
 
         scroll = QScrollArea()
         event_layout = QVBoxLayout()
 
+        # TODO Get entries from db
         event_layout.addWidget(TrackedEvent(
             "Test",
             "Case aaaaaaaaaaaaaaaa bbbbbbbbbbbbbb ccccccccccccccccc eeeeeeeeeeeeeee ddddddddd eeeeeeeeeee aaaaaaaaaa ssssssssssssd ddddddd",
@@ -61,9 +74,21 @@ class TrackedEvent():
         self.description = description
         self.deadline = deadline
 
-    def get_widget(self,):
-        widget_layout = QHBoxLayout()
 
+    def get_widget(self,):
+        def _copy():
+            pass
+
+
+        def _edit():
+            pass
+
+
+        def _delete():
+            pass
+
+
+        widget_layout = QHBoxLayout()
 
         lbl_title = QLabel(self.title.upper())
         lbl_title.setStyleSheet("font-weight: bold")
