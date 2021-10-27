@@ -26,7 +26,7 @@ class PyQtGUI(QWidget):
     def navigator(self, message):
         if message == Message.login:
             self.clear_layout(self.layout)
-            Login(self.layout, self.navigator, True)
+            Login(self.layout, self.navigator)
         elif message == Message.home:
             self.clear_layout(self.layout)
             Home(self.layout, self.navigator)

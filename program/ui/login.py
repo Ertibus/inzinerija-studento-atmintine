@@ -2,21 +2,19 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 
-from program.repo import Repository
 from program.ui.message import Message
+from program.repo import NewRepository
 
 class Login():
-    def __init__(self, root, listener, new_user):
+    def __init__(self, root, listener):
         self.root = root
         self.listener = listener
-        self.new_user = new_user
         self.init_ui()
 
     def press_login(self, user:str, password:str):
         try:
+            NewRepository.login(user, password)
             pass
-            # TODO login check
-            #FileMG.login_user(user, password)
         except Exception as err:
             QMessageBox.critical(None, "Error", str(err))
             print(err)
@@ -41,8 +39,7 @@ class Login():
                 password = password_ent.text()
                 if password != cpassword_ent.text():
                     raise ValueError("Passwords Don't Match")
-                # TODO Register user
-                #FileMG.register_user(user_ent.text(), password)
+                NewRepository.add_user(user_ent.text(), password)
             except Exception as err:
                 print(err)
                 QMessageBox.critical(None, "Error", str(err))
@@ -99,8 +96,7 @@ class Login():
         def _register():
             self.press_register()
 
-        if self.new_user == True:
-            self.new_user = False
+        if NewRepository.user_exists() == False:
             _register()
             return
 

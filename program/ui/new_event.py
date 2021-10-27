@@ -1,7 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 
-from program.repo import Repository
+from program.repo import NewRepository
 from program.ui.message import Message
 
 class NewEvent():
@@ -13,12 +13,12 @@ class NewEvent():
     def init_ui(self):
         def _submit():
             try:
-                pass
-                # TODO Register user
-                #FileMG.register_user(user_ent.text(), password)
+                NewRepository.add_event(title_ent.text(), desc_ent.text(), deadline_ent.text())
             except Exception as err:
                 print(err)
                 QMessageBox.critical(None, "Error", str(err))
+            else:
+                _back()
 
         def _back():
             self.listener(Message.home)
@@ -44,6 +44,7 @@ class NewEvent():
         deadline_lbl = QLabel("Deadline:")
         main_layout.addWidget(deadline_lbl, 5, 1)
         deadline_ent = QDateTimeEdit()
+        deadline_ent.setDisplayFormat("yyyy-MM-dd HH:mm")
         deadline_ent.setCalendarPopup(True)
         main_layout.addWidget(deadline_ent, 6, 1)
 

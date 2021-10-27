@@ -63,7 +63,7 @@ class NewRepository(Repository):
 
     @classmethod
     def user_exists(cls):
-        ret = cls.commit_query("SELECT * FROM User")
+        ret = cls.get_value("SELECT * FROM User")
         if not ret:
             return False
         else:
