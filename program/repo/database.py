@@ -49,24 +49,27 @@ class Repository():
 
     # Return multiple results as a list. Possible returns: [1, 2, 3] or ['string', 'str', 'String'] or [['id', 'string', 1] or ['id','string', 2]]
     @classmethod
-    def get_list(cls, sql_query: str):
+    def get_list(cls, sql_query: str, parameters = {}):
         if cls.__db is None or cls.__db_cursor is None:
             cls.connect()
 
+        cls.__db_cursor.execute(sql_query, parameters)
+
         ret_list: list = []
-        cls.__db_cursor.execute(sql_query)
         for x in cls.__db_cursor:
             ret_list.append(x)
 
         return ret_list
+    
+    
 
     # Create, Delete or Update query executor
     @classmethod
-    def commit_query(cls, sql_query):
+    def commit_query(cls, sql_query, parameters):
         if cls.__db is None or cls.__db_cursor is None:
             cls.connect()
 
-        cls.__db_cursor.execute(sql_query)
+        cls.__db_cursor.execute(sql_query, parameters)
         cls.__db.commit()
 
 
