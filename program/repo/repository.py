@@ -27,10 +27,8 @@ class NewRepository(Repository):
 
     @classmethod
     def get_event_list(cls):
-        ret = cls.get_list("SELECT * FROM Event")
+        ret: list = cls.get_list("SELECT * FROM Event ORDER BY deadline ASC")
 
-        if not ret:
-            raise ValueError("Not found")
         return ret
         
     @classmethod

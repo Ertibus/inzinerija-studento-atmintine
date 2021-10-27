@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import *
 
 from program.repo import NewRepository
 from program.ui.message import Message
+from PyQt5.QtCore import QDateTime
+from datetime import datetime
 
 class NewEvent():
     def __init__(self, root, listener):
@@ -46,6 +48,11 @@ class NewEvent():
         deadline_ent = QDateTimeEdit()
         deadline_ent.setDisplayFormat("yyyy-MM-dd HH:mm")
         deadline_ent.setCalendarPopup(True)
+        date_str = datetime.now().strftime("%Y-%m-%d %H:%M").split(" ")
+        date_date = date_str[0].split("-")
+        date_time = date_str[1].split(":")
+        deadline_ent.setDateTime(QDateTime(int(date_date[0]), int(date_date[1]), int(date_date[2]), int(date_time[0]), int(date_time[1])))
+            
         main_layout.addWidget(deadline_ent, 6, 1)
 
         break_lbl = QLabel("    ")

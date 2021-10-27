@@ -123,7 +123,6 @@ class TrackedEvent():
             date_str = self.deadline.split(" ")
             date_date = date_str[0].split("-")
             date_time = date_str[1].split(":")
-            deadline_picker.setDateTime(QDateTime(2020, 10, 10, 10, 20))
             deadline_picker.setDateTime(QDateTime(int(date_date[0]), int(date_date[1]), int(date_date[2]), int(date_time[0]), int(date_time[1])))
             deadline_picker.setCalendarPopup(True)
             deadline_picker.setDisplayFormat("yyyy-MM-dd HH:mm")
