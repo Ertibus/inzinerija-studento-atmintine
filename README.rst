@@ -18,6 +18,7 @@ Dependencies
 ------------
 Python dependencies. Can be installed with ``pip install -r requirements.txt``::
 
- PyQt5==5.15.5
- PyQt5-Qt5==5.15.2
- PyQt5-sip==12.9.0
+    pyperclip==1.8.2
+    PyQt5==5.15.5
+    PyQt5-Qt5==5.15.2
+    PyQt5-sip==12.9.0
