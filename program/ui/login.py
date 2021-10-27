@@ -10,11 +10,12 @@ class Login():
         self.root = root
         self.listener = listener
         self.new_user = new_user
-        self.initUI()
+        self.init_ui()
 
     def press_login(self, user:str, password:str):
         try:
             pass
+            # TODO login check
             #FileMG.login_user(user, password)
         except Exception as err:
             QMessageBox.critical(None, "Error", str(err))
@@ -41,16 +42,17 @@ class Login():
                 password = password_ent.text()
                 if password != cpassword_ent.text():
                     raise ValueError("Passwords Don't Match")
+                # TODO Register user
                 #FileMG.register_user(user_ent.text(), password)
             except Exception as err:
                 print(err)
                 QMessageBox.critical(None, "Error", str(err))
             self.listener(Message.clear)
-            self.initUI()
+            self.init_ui()
 
         def _back():
             self.listener(Message.clear)
-            self.initUI()
+            self.init_ui()
 
         main_layout = QGridLayout()
         self.root.addLayout(main_layout)
@@ -99,12 +101,11 @@ class Login():
     #6   |   {LOGIN}   |
     #    +-------------+
     #7
-    def initUI(self):
+    def init_ui(self):
         def _login():
             self.press_login(user_ent.text(), password_ent.text())
 
         def _register():
-            #Utilities.clear_layout(self.root)
             self.press_register()
 
         if self.new_user == True:
