@@ -2,7 +2,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 
-from program.repo import Repository
 from program.ui.message import Message
 
 class Login():

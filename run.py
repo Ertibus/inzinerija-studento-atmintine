@@ -7,7 +7,7 @@ from program.repo import *
 
 if __name__ == '__main__':
     # Connect repositories
-    Repository.connect("sqlite.db")
+    NewRepository.connect("sqlite.db")
 
     # Draw window
     app = QApplication(sys.argv)
