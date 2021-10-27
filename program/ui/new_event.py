@@ -44,6 +44,7 @@ class NewEvent():
         deadline_lbl = QLabel("Deadline:")
         main_layout.addWidget(deadline_lbl, 5, 1)
         deadline_ent = QDateTimeEdit()
+        deadline_ent.setCalendarPopup(True)
         main_layout.addWidget(deadline_ent, 6, 1)
 
         break_lbl = QLabel("    ")

@@ -82,7 +82,7 @@ class Repository():
             if not value or value.isspace():
                 raise ValueError("Bad value given for query search")
 
-            ret = cls.get_result("SELECT `value` FROM table WHERE arg = 1")
+            ret = cls.get_value("SELECT `value` FROM table WHERE arg = 1")
             # or
             ret = cls.get_list("SELECT `:value` FROM :table WHERE arg = :arg", {
                 "value": value,
