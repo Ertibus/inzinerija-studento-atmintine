@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import *
 from program.ui import Message
 from datetime import datetime
 from PyQt5.QtCore import QDateTime, Qt
+from program.repo import NewRepository
 import sys
 import pyperclip
 
@@ -39,12 +40,13 @@ class Home():
         scroll = QScrollArea()
         event_layout = QVBoxLayout()
 
-        # TODO Get entries from db
-        event_layout.addWidget(TrackedEvent(
-            "Test",
-            "Case aaaaaaaaaaaaaaaa bbbbbbbbbbbbbb ccccccccccccccccc eeeeeeeeeeeeeee ddddddddd eeeeeeeeeee aaaaaaaaaa ssssssssssssd ddddddd",
-            datetime.now().strftime("%Y-%m-%d %H:%M")
-        ).get_widget())
+        for event in NewRepository.get_event_list():
+            event_layout.addWidget(TrackedEvent(
+                event[0],
+                event[1],
+                event[2],
+                event[3],
+            ).get_widget())
 
         event_layout.addStretch()
 
@@ -65,7 +67,8 @@ class Home():
 
 
 class TrackedEvent():
-    def __init__(self, title: str, description: str, deadline: str):
+    def __init__(self, title: str, description: str, deadline: str, my_id: int):
+        self.my_id = my_id
         self.title = title
         self.description = description
         self.deadline = deadline
@@ -96,8 +99,16 @@ class TrackedEvent():
 
 
             def _save():
-                pass # TODO Check against the DB
-                _cancel()
+                try:
+                    NewRepository.update_event(self.my_id, title_edit.text(), desc_edit.toPlainText(), deadline_picker.text())
+                except Exception as err:
+                    print(err)
+                    QMessageBox.critical(None, "Error", str(err))
+                else:
+                    lbl_title.setText(title_edit.text())
+                    desc.setText(desc_edit.toPlainText())
+                    deadline_lbl.setText("Deadline: {}".format(deadline_picker.text()))
+                    _cancel()
 
 
             title_edit = QLineEdit()
@@ -110,12 +121,12 @@ class TrackedEvent():
 
             deadline_picker = QDateTimeEdit()
             date_str = self.deadline.split(" ")
-            print(date_str)
             date_date = date_str[0].split("-")
             date_time = date_str[1].split(":")
             deadline_picker.setDateTime(QDateTime(2020, 10, 10, 10, 20))
             deadline_picker.setDateTime(QDateTime(int(date_date[0]), int(date_date[1]), int(date_date[2]), int(date_time[0]), int(date_time[1])))
             deadline_picker.setCalendarPopup(True)
+            deadline_picker.setDisplayFormat("yyyy-MM-dd HH:mm")
             widget_layout.addWidget(deadline_picker, 0, 1, 1, 1)
 
 
@@ -137,8 +148,8 @@ class TrackedEvent():
             btn_delete.setHidden(True)
 
         def _delete():
+            NewRepository.delete_event(self.my_id)
             btn_box.deleteLater()
-            # TODO DB Entry Deletion
 
 
         widget_layout = QGridLayout()
