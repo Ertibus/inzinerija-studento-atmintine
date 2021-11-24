@@ -5,4 +5,5 @@ class Message():
     home = 1
     new_event = 2
     settings = 3
+    forgot = 4
     clear = 99

@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from program.ui import Message
 from datetime import datetime
 from PyQt5.QtCore import QDateTime, Qt
-from program.repo import NewRepository
+from program.repo import NewRepository, Serialization
 import sys
 import pyperclip
 
@@ -16,6 +16,35 @@ class Home():
         def _new():
             self.navigator(Message.new_event)
 
+        def _import():
+            source_path = QFileDialog.getOpenFileName(self.body.parentWidget(), 'Import data', "./", "JSON files (*.json)")
+            if source_path[0] != "":
+                try:
+                    Serialization.import_data(source_path[0])
+                    self.navigator(Message.home)
+                except Exception as err:
+                    print(err)
+                    QMessageBox.critical(None, "Error", "Failed to import data\n" + str(err))
+
+        def _export():
+            source_path = QFileDialog.getSaveFileName(self.body.parentWidget(), 'Import data', "./", "JSON files (*.json)")
+            if source_path[0] != "":
+                try:
+                    data = []
+                    for event in self.event_list:
+                        if event.checkbox.isChecked():
+                            data.append({
+                                "title": event.title,
+                                "description": event.description,
+                                "deadline": event.deadline
+                            })
+                    if not data:
+                        raise Exception("No events selected")
+                    Serialization.export_data(source_path[0], data)
+                except Exception as err:
+                    print(err)
+                    QMessageBox.critical(None, "Error", "Failed to export data\n" + str(err))
+
         def _exit():
             sys.exit(0)
             print("Exit")
@@ -26,12 +55,20 @@ class Home():
 
         button_layout = QVBoxLayout()
 
-        #
+        # BUTTONS
         btn_new = QPushButton("New")
         btn_new.clicked.connect(_new)
         button_layout.addWidget(btn_new)
-        button_layout.addStretch()
 
+        btn_import = QPushButton("Import")
+        btn_import.clicked.connect(_import)
+        button_layout.addWidget(btn_import)
+
+        btn_export = QPushButton("Export")
+        btn_export.clicked.connect(_export)
+        button_layout.addWidget(btn_export)
+
+        button_layout.addStretch()
         btn_quit = QPushButton("Quit")
         btn_quit.clicked.connect(_exit)
         button_layout.addWidget(btn_quit)
@@ -39,14 +76,17 @@ class Home():
 
         scroll = QScrollArea()
         event_layout = QVBoxLayout()
+        self.event_list = []
 
         for event in NewRepository.get_event_list():
-            event_layout.addWidget(TrackedEvent(
+            event = TrackedEvent(
                 event[0],
                 event[1],
                 event[2],
                 event[3],
-            ).get_widget())
+            )
+            self.event_list.append(event)
+            event_layout.addWidget(event.get_widget())
 
         event_layout.addStretch()
 
@@ -147,20 +187,24 @@ class TrackedEvent():
             btn_delete.setHidden(True)
 
         def _delete():
-            NewRepository.delete_event(self.my_id)
-            btn_box.deleteLater()
+            if QMessageBox.Ok == QMessageBox.critical(None, "Delete event", "Are you sure you want to delete '{}' event?".format(self.title.capitalize()), QMessageBox.Ok | QMessageBox.Cancel):
+                NewRepository.delete_event(self.my_id)
+                btn_box.deleteLater()
 
 
         widget_layout = QGridLayout()
 
+        self.checkbox = QCheckBox("")
+        widget_layout.addWidget(self.checkbox, 0, 0, 1, 1)
+
         lbl_title = QLabel(self.title.upper())
         lbl_title.setStyleSheet("font-weight: bold")
-        widget_layout.addWidget(lbl_title, 0, 0, 1, 1)
+        widget_layout.addWidget(lbl_title, 0, 1, 1, 1)
 
-        widget_layout.setColumnStretch(0, 1)
+        widget_layout.setColumnStretch(1, 1)
 
         deadline_lbl = QLabel(f"Deadline: {self.deadline}")
-        widget_layout.addWidget(deadline_lbl, 0, 1, 1, 1)
+        widget_layout.addWidget(deadline_lbl, 0, 2, 1, 1)
 
         # [ Buttons ]
 
@@ -183,6 +227,19 @@ class TrackedEvent():
         widget_layout.addWidget(desc, 1, 0, 7, 7)
 
         btn_box = QGroupBox()
+
+        date_str = datetime.now().strftime("%Y-%m-%d %H:%M").split(" ")
+        date_date_now = date_str[0].split("-")
+        date_str2 = self.deadline.split(" ")
+        date_date = date_str2[0].split("-")
+
+        if (int(date_date[0]) < int(date_date_now[0]) or
+                int(date_date[0]) == int(date_date_now[0]) and int(date_date[1]) < int(date_date_now[1]) or
+                int(date_date[0]) == int(date_date_now[0]) and
+            int(date_date[1]) == int(date_date_now[1]) and
+            int(date_date[2]) < int(date_date_now[2])):
+            btn_box.setStyleSheet("background: #D6D6D6;")
+
         btn_box.setLayout(widget_layout)
 
         return btn_box

@@ -26,6 +26,11 @@ class NewRepository(Repository):
         })
 
     @classmethod
+    def get_recovery_info(cls):
+        ret = cls.get_list("SELECT question_id, answer, password FROM User")
+        return ret[0]
+
+    @classmethod
     def get_event_list(cls):
         ret: list = cls.get_list("SELECT * FROM Event ORDER BY deadline ASC")
 
@@ -38,13 +43,15 @@ class NewRepository(Repository):
         })
 
     @classmethod
-    def add_user(cls, username: str, password: str):
-        if not username or username.isspace() or not password or password.isspace():
+    def add_user(cls, username: str, password: str, question: int, answer: str):
+        if not username or username.isspace() or not password or password.isspace() or not answer or answer.isspace():
             raise ValueError("Invalid input")
         
-        cls.commit_query("INSERT INTO User (username, password) VALUES (:username, :password)", {
+        cls.commit_query("INSERT INTO User (username, password, question_id, answer) VALUES (:username, :password, :question_id, :answer)", {
             "username": username,
             "password": password,
+            "question_id": question,
+            "answer": answer,
         })
     
     @classmethod

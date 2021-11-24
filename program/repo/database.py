@@ -1,5 +1,6 @@
 import sqlite3
 import sys
+import os
 
 # Database class for instancing a connection to a database. Should be created by a repository class
 class Database:
@@ -31,13 +32,19 @@ class Repository():
     # Private database cursor for query execution
     __db_cursor = None
 
-    # Establish connection with the database by instancing a new database object
+    # Establish connection with the database by instancing a new database object. If object does not exits - creates a new database
     @classmethod
     def connect(cls, database_path: str):
         # Only establish a connection is one is not already created
         if cls.__db == None:
-            cls.__db = Database(database_path);
-            cls.__db_cursor = cls.__db.get_cursor()
+            if not os.path.exists("data.sqlite"):
+                cls.__db = Database(database_path);
+                cls.__db_cursor = cls.__db.get_cursor()
+                cls.__db_cursor.execute(' CREATE TABLE IF NOT EXISTS "Event" ("title"	TEXT NOT NULL, "description"	TEXT, "deadline"	TEXT NOT NULL, "id"	INTEGER NOT NULL UNIQUE, PRIMARY KEY("id" AUTOINCREMENT)); ')
+                cls.__db_cursor.execute('CREATE TABLE IF NOT EXISTS "User" ("username"	TEXT NOT NULL UNIQUE, "password"	TEXT NOT NULL, "question_id" ITEGER NOT NULL, "answer" TEXT NOT NULL);')
+            else:
+                cls.__db = Database(database_path);
+                cls.__db_cursor = cls.__db.get_cursor()
 
     # Return a single value. Possible returns: 1 or "string"
     @classmethod

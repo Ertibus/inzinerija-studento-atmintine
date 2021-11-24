@@ -5,9 +5,11 @@ from PyQt5.QtWidgets import QApplication
 from program.index import PyQtGUI
 from program.repo import *
 
+DB_NAME = "data.sqlite"
+
 if __name__ == '__main__':
     # Connect repositories
-    NewRepository.connect("sqlite.db")
+    NewRepository.connect(DB_NAME)
 
     # Draw window
     app = QApplication(sys.argv)

@@ -35,7 +35,9 @@ class PyQtGUI(QWidget):
             NewEvent(self.layout, self.navigator)
         elif message == Message.settings:
             self.clear_layout(self.layout)
-            pass
+        elif message == Message.forgot:
+            self.clear_layout(self.layout)
+            Recovery(self.layout, self.navigator)
         elif message == Message.clear:
             self.clear_layout(self.layout)
         pass
