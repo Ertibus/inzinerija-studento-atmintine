@@ -136,6 +136,7 @@ class TrackedEvent():
                 btn_copy.setHidden(False)
                 btn_edit.setHidden(False)
                 btn_delete.setHidden(False)
+                self.checkbox.setHidden(False)
 
 
             def _save():
@@ -153,7 +154,7 @@ class TrackedEvent():
 
             title_edit = QLineEdit()
             title_edit.setText(lbl_title.text())
-            widget_layout.addWidget(title_edit, 0, 0, 1, 1)
+            widget_layout.addWidget(title_edit, 0, 1, 1, 1)
 
             desc_edit = QTextEdit()
             desc_edit.setText(desc.text())
@@ -166,7 +167,7 @@ class TrackedEvent():
             deadline_picker.setDateTime(QDateTime(int(date_date[0]), int(date_date[1]), int(date_date[2]), int(date_time[0]), int(date_time[1])))
             deadline_picker.setCalendarPopup(True)
             deadline_picker.setDisplayFormat("yyyy-MM-dd HH:mm")
-            widget_layout.addWidget(deadline_picker, 0, 1, 1, 1)
+            widget_layout.addWidget(deadline_picker, 0, 2, 1, 1)
 
 
             btn_cancel = QPushButton("Cancel")
@@ -185,6 +186,7 @@ class TrackedEvent():
             btn_copy.setHidden(True)
             btn_edit.setHidden(True)
             btn_delete.setHidden(True)
+            self.checkbox.setHidden(True)
 
         def _delete():
             if QMessageBox.Ok == QMessageBox.critical(None, "Delete event", "Are you sure you want to delete '{}' event?".format(self.title.capitalize()), QMessageBox.Ok | QMessageBox.Cancel):

@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 
 from program.ui.message import Message
 from program.repo import NewRepository
+from program.ui.recovery_questions import question_list
 
 class Recovery():
     def __init__(self, root, listener):
@@ -14,10 +15,8 @@ class Recovery():
     def show_password(self):
         def _submit():
             try:
-                (s_question_id, s_answer, s_pass) = NewRepository.get_recovery_info()
-                if (combo_box.currentIndex() == s_question_id
-                    and s_answer == answer.text()):
-                    QMessageBox.information(None, "Password", s_pass)
+                if (s_answer == answer.text()):
+                    QMessageBox.information(None, "Password", "Password: {}".format(s_pass))
                 else:
                     raise ValueError("Security question or awnser does not match!")
 
@@ -29,21 +28,22 @@ class Recovery():
             self.listener(Message.login)
 
 
+        (s_question_id, s_answer, s_pass) = NewRepository.get_recovery_info()
         main_layout = QGridLayout()
         self.root.addLayout(main_layout)
 
         main_layout.setRowStretch(0, 1)
         main_layout.setRowStretch(100, 1)
         main_layout.setColumnStretch(0, 1)
+        main_layout.setColumnStretch(1, 1)
         main_layout.setColumnStretch(2, 1)
 
         sec_layout = QVBoxLayout()
         combo_lbl = QLabel("Question:")
         sec_layout.addWidget(combo_lbl)
-        combo_box = QComboBox()
-        combo_box.addItem("The name of your first pet")
-        combo_box.addItem("City you were born in")
-        combo_box.addItem("Favorite movie")
+        combo_box = QLineEdit()
+        combo_box.setText(question_list[s_question_id])
+        combo_box.setReadOnly(True)
         sec_layout.addWidget(combo_box)
 
         answer_lbl = QLabel("Answer:")

@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 
 from program.ui.message import Message
 from program.repo import NewRepository
+from program.ui.recovery_questions import question_list
 
 class Login():
     def __init__(self, root, listener):
@@ -52,6 +53,7 @@ class Login():
         main_layout.setRowStretch(0, 1)
         main_layout.setRowStretch(100, 1)
         main_layout.setColumnStretch(0, 1)
+        main_layout.setColumnStretch(1, 1)
         main_layout.setColumnStretch(2, 1)
 
         register_layout = QVBoxLayout()
@@ -79,7 +81,10 @@ class Login():
         sec_layout = QVBoxLayout()
         combo_lbl = QLabel("Question:")
         sec_layout.addWidget(combo_lbl)
+
         combo_box = QComboBox()
+        for combo in question_list:
+            pass
         combo_box.addItem("The name of your first pet")
         combo_box.addItem("City you were born in")
         combo_box.addItem("Favorite movie")
@@ -131,6 +136,7 @@ class Login():
         main_layout.setRowStretch(0, 1)
         main_layout.setRowStretch(10, 1)
         main_layout.setColumnStretch(0, 1)
+        main_layout.setColumnStretch(1, 1)
         main_layout.setColumnStretch(2, 1)
 
         user_lbl = QLabel("User:")
