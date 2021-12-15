@@ -37,7 +37,7 @@ class Repository():
     def connect(cls, database_path: str):
         # Only establish a connection is one is not already created
         if cls.__db == None:
-            if not os.path.exists("data.sqlite"):
+            if not os.path.exists(database_path):
                 cls.__db = Database(database_path);
                 cls.__db_cursor = cls.__db.get_cursor()
                 cls.__db_cursor.execute(' CREATE TABLE IF NOT EXISTS "Event" ("title"	TEXT NOT NULL, "description"	TEXT, "deadline"	TEXT NOT NULL, "id"	INTEGER NOT NULL UNIQUE, PRIMARY KEY("id" AUTOINCREMENT)); ')

@@ -11,9 +11,9 @@ class Serialization():
             for entry in data:
                 NewRepository.add_event(entry['title'], entry['description'], entry['deadline'])
 
+
     @classmethod
     def export_data(cls, source: str, data: dict):
         with open(source, 'w') as file:
             json_data = json.dumps(data)
             file.write(json_data)
-            print(json_data)
