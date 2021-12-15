@@ -10,6 +10,7 @@ class Home():
     def __init__(self, body: QLayout, navigator):
         self.navigator = navigator
         self.body = body
+        self.dark_mode = True
         self.init_ui()
 
     def init_ui(self):
@@ -49,6 +50,16 @@ class Home():
             sys.exit(0)
             print("Exit")
 
+        def _change_style():
+            if self.dark_mode:
+                self.navigator(Message.day_mode)
+                btn_style.setText("Mode: Day")
+            else:
+                self.navigator(Message.night_mode)
+                btn_style.setText("Mode: Night")
+            self.dark_mode = not self.dark_mode
+
+
         wrapper = QGridLayout()
         wrapper.setColumnStretch(1, 1)
         self.body.addLayout(wrapper)
@@ -68,10 +79,12 @@ class Home():
         btn_export.clicked.connect(_export)
         button_layout.addWidget(btn_export)
         #
-        btn_style = QPushButton("")
-        #
+        btn_style = QPushButton("Mode: Dark")
+        btn_style.clicked.connect(_change_style)
+        button_layout.addWidget(btn_style)
 
         button_layout.addStretch()
+
         btn_quit = QPushButton("Quit")
         btn_quit.clicked.connect(_exit)
         button_layout.addWidget(btn_quit)

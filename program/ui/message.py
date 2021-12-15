@@ -6,4 +6,6 @@ class Message():
     new_event = 2
     settings = 3
     forgot = 4
+    day_mode = 10
+    night_mode = 11
     clear = 99

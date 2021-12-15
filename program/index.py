@@ -43,6 +43,12 @@ class PyQtGUI(QWidget):
             Recovery(self.layout, self.navigator)
         elif message == Message.clear:
             self.clear_layout(self.layout)
+        elif message == Message.day_mode:
+            with open("light-mode.css") as file:
+                self.setStyleSheet(file.read())
+        elif message == Message.night_mode:
+            with open("dark-mode.css") as file:
+                self.setStyleSheet(file.read())
         pass
 
     def clear_layout(self, layout):
