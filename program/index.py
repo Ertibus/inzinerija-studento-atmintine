@@ -16,6 +16,9 @@ class PyQtGUI(QWidget):
     def init_ui(self):
         self.layout = QVBoxLayout()
 
+        with open("dark-mode.css") as file:
+            self.setStyleSheet(file.read())
+
         self.navigator(0)
 
         self.setLayout(self.layout)

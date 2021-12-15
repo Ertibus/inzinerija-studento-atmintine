@@ -210,15 +210,15 @@ class TrackedEvent():
 
         # [ Buttons ]
 
-        btn_copy = QPushButton("C")
+        btn_copy = QPushButton("📋")
         btn_copy.setFixedWidth(32)
         btn_copy.clicked.connect(_copy)
         widget_layout.addWidget(btn_copy, 0, 5, 1, 1)
-        btn_edit = QPushButton("E")
+        btn_edit = QPushButton("✏️")
         btn_edit.setFixedWidth(32)
         btn_edit.clicked.connect(_edit)
         widget_layout.addWidget(btn_edit, 0, 6, 1, 1)
-        btn_delete = QPushButton("D")
+        btn_delete = QPushButton("❌")
         btn_delete.setFixedWidth(32)
         btn_delete.clicked.connect(_delete)
         widget_layout.addWidget(btn_delete, 0, 7, 1, 1)
