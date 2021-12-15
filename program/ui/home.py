@@ -67,6 +67,9 @@ class Home():
         btn_export = QPushButton("Export")
         btn_export.clicked.connect(_export)
         button_layout.addWidget(btn_export)
+        #
+        btn_style = QPushButton("")
+        #
 
         button_layout.addStretch()
         btn_quit = QPushButton("Quit")

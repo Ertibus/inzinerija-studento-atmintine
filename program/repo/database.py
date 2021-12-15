@@ -11,7 +11,7 @@ class Database:
 
     def start_connection(self, location: str):
         try:
-            self.__db = sqlite3.connect(location)
+            self.__db = sqlite3.connect(location, check_same_thread=False)
         except Exception as e:
             print(f'{e}')
             sys.exit(1)
