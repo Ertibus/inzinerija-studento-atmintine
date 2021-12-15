@@ -13,6 +13,7 @@ class PyQtGUI(QWidget):
         super().__init__()
         self.init_ui()
 
+
     def init_ui(self):
         self.layout = QVBoxLayout()
 

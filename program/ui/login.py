@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import *
 from program.ui.message import Message
 from program.repo import NewRepository
 from program.ui.recovery_questions import question_list
+import program.notifyd
+import threading
 
 class Login():
     def __init__(self, root, listener):
@@ -20,6 +22,10 @@ class Login():
             QMessageBox.critical(None, "Error", str(err))
             print(err)
         else:
+            # Notify
+            notify_thread = threading.Thread(target=program.notifyd.work)
+            notify_thread.daemon = True
+            notify_thread.start()
             self.listener(Message.home)
 
     #0   1              2
