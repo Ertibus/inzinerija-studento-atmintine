@@ -7,6 +7,7 @@ from datetime import datetime
 import os
 
 def work():
+    time.sleep(2)
     shown = []
     while True:
         events = NewRepository.get_event_list()
