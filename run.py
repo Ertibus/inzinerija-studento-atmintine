@@ -14,6 +14,7 @@ if __name__ == '__main__':
 
     # Notify
     notify_thread = threading.Thread(target=program.notifyd.work)
+    notify_thread.daemon = True
     notify_thread.start()
     # Draw window
     app = QApplication(sys.argv)

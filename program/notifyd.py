@@ -8,7 +8,6 @@ from datetime import datetime
 def work():
     shown = []
     while True:
-
         events = NewRepository.get_event_list()
         print(events)
 
@@ -20,9 +19,8 @@ def work():
             date_str2 = item[2].split(" ")
             date_date = date_str2[0].split("-")
 
-            if (int(date_date[0]) < int(date_date_now[0]) or # Year
-                    int(date_date[0]) == int(date_date_now[0]) and int(date_date[1]) < int(date_date_now[1]) or # Month
-                    int(date_date[0]) == int(date_date_now[0]) and int(date_date[1]) == int(date_date_now[1]) and int(date_date[2]) == int(date_date_now[2]) + 1): # Day
+            if (int(date_date[0]) == int(date_date_now[0]) and int(date_date[1]) == int(date_date_now[1]) and
+                ((int(date_date[2]) == int(date_date_now[2]) + 1) or (int(date_date[2]) == int(date_date_now[2])))): # Day
                 notification.notify(
                     title=item[0],
                     message=item[1],
