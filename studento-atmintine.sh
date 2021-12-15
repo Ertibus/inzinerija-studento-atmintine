@@ -4,5 +4,5 @@ case "$OSTYPE" in
 	msys*) ./venv/Scripts/activate;;
 	*)		echo "unknown: $OSTYPE";;
 esac
-pip install -r requirements.txt;
+yes | pip install -r requirements.txt --quiet;
 python3 run.py
