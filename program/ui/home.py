@@ -10,7 +10,7 @@ class Home():
     def __init__(self, body: QLayout, navigator):
         self.navigator = navigator
         self.body = body
-        self.dark_mode = True
+        self.dark_mode = StaticVariables.get_mode()
         self.init_ui()
 
     def init_ui(self):
@@ -57,8 +57,7 @@ class Home():
             else:
                 self.navigator(Message.night_mode)
                 btn_style.setText("Mode: Night")
-            self.dark_mode = not self.dark_mode
-
+            self.dark_mode = StaticVariables.toggle_mode()
 
         wrapper = QGridLayout()
         wrapper.setColumnStretch(1, 1)
@@ -79,7 +78,7 @@ class Home():
         btn_export.clicked.connect(_export)
         button_layout.addWidget(btn_export)
         #
-        btn_style = QPushButton("Mode: Dark")
+        btn_style = QPushButton("Mode: " + ("Night" if self.dark_mode else "Day"))
         btn_style.clicked.connect(_change_style)
         button_layout.addWidget(btn_style)
 
@@ -261,3 +260,15 @@ class TrackedEvent():
         btn_box.setLayout(widget_layout)
 
         return btn_box
+
+class StaticVariables():
+    dark_mode = True;
+
+    @classmethod
+    def get_mode(cls):
+        return cls.dark_mode
+
+    @classmethod
+    def toggle_mode(cls):
+        cls.dark_mode = not cls.dark_mode
+        return cls.dark_mode

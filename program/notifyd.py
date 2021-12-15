@@ -10,7 +10,6 @@ def work():
     shown = []
     while True:
         events = NewRepository.get_event_list()
-        print(events)
 
         for item in events:
             if item[3] in shown:
